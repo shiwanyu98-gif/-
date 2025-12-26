@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" version="1.0.2" class="in-text" default-locale="en-US">
+  <info>
+    <title>Chemistry – An Asian Journal (Review-like, Full Journal Title, Quoted Title)</title>
+    <id>http://www.zotero.org/styles/caj-review-like-full-journal-quoted-title</id>
+    <link href="http://www.zotero.org/styles/caj-review-like-full-journal-quoted-title" rel="self"/>
+    <author>
+      <name>Custom (for user request)</name>
+    </author>
+    <category citation-format="numeric"/>
+    <category field="chemistry"/>
+    <updated>2025-12-26T00:00:00+00:00</updated>
+    <summary>
+      Bibliography format: Initials. Surname, “Title,” Journal Full Title Volume (Year), Pages, https://doi.org/DOI.
+      Citation format: superscript numbers.
+    </summary>
+  </info>
+
+  <!-- ===== Macros ===== -->
+
+  <macro name="author">
+    <names variable="author" delimiter=", " and="text" delimiter-precedes-last="always" et-al-min="11" et-al-use-first="10">
+      <!-- Given-name initials first, then family name -->
+      <name form="short" initialize-with=". " delimiter=", "/>
+      <label form="short" prefix=", "/>
+      <et-al prefix=", " font-style="normal">et al.</et-al>
+    </names>
+  </macro>
+
+  <macro name="year">
+    <date variable="issued">
+      <date-part name="year"/>
+    </date>
+  </macro>
+
+  <macro name="title-quoted">
+    <choose>
+      <if variable="title">
+        <text variable="title" quotes="true"/>
+      </if>
+    </choose>
+  </macro>
+
+  <macro name="journal-full">
+    <choose>
+      <if variable="container-title">
+        <text variable="container-title" font-style="italic"/>
+      </if>
+    </choose>
+  </macro>
+
+  <macro name="vol-year-pages">
+    <group>
+      <choose>
+        <if variable="volume">
+          <text variable="volume" font-weight="bold"/>
+        </if>
+      </choose>
+      <text macro="year" prefix=" (" suffix=")"/>
+      <choose>
+        <if variable="page">
+          <text variable="page" prefix=", "/>
+        </if>
+      </choose>
+    </group>
+  </macro>
+
+  <macro name="doi-or-url">
+    <choose>
+      <if variable="DOI">
+        <text variable="DOI" prefix="https://doi.org/"/>
+      </if>
+      <else-if variable="URL">
+        <text variable="URL"/>
+      </else-if>
+    </choose>
+  </macro>
+
+  <!-- ===== Citation (superscript numeric) ===== -->
+
+  <citation collapse="citation-number" after-collapse-delimiter="," prefix="" suffix="">
+    <sort>
+      <key variable="citation-number"/>
+    </sort>
+    <layout vertical-align="sup" delimiter=",">
+      <text variable="citation-number"/>
+    </layout>
+  </citation>
+
+  <!-- ===== Bibliography ===== -->
+
+  <bibliography hanging-indent="true" second-field-align="flush" et-al-min="11" et-al-use-first="10">
+    <sort>
+      <key variable="citation-number"/>
+    </sort>
+
+    <layout suffix=".">
+      <!-- Authors -->
+      <text macro="author" suffix=", "/>
+
+      <!-- “Title,” -->
+      <text macro="title-quoted" suffix=", "/>
+
+      <!-- Journal Full Title -->
+      <text macro="journal-full" suffix=" "/>
+
+      <!-- Volume (Year), Pages -->
+      <text macro="vol-year-pages"/>
+
+      <!-- DOI -->
+      <choose>
+        <if variable="DOI URL">
+          <text macro="doi-or-url" prefix=", "/>
+        </if>
+      </choose>
+    </layout>
+  </bibliography>
+</style>
